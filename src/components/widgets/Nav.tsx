@@ -46,7 +46,7 @@ function Nav() {
       <Box  sx={{
       position: "fixed",
       top: 0,
-      width: "99%",
+      width: "100%",
       zIndex: 1200
     }}>
 

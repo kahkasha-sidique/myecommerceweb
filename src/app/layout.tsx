@@ -29,13 +29,9 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body>
-  <Nav/>
-  <main style={{ marginTop: "113px" }}>
-    {children}
-  </main>
-  <Footer/>
-</body>
+      <Nav/>
+      <body style={{marginTop:"113px"}}>{children}</body>
+      <Footer/>
     </html>
   );
 }
