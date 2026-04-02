@@ -32,9 +32,9 @@ export default function Sale() {
 
   const filterProduct=selected==="All Product"?AllProduct:AllProduct.filter((item)=>item.seller==selected)
     return (
-      <Box sx={{ background: "#f5f2f2", py: 5,width:"100%"}}>
-          <Container maxWidth={false} disableGutters sx={{display:"flex",justifyContent:"flex-start",flexDirection:"row",gap:2}}>
-          <Box sx={{display:"flex",px:4,flexDirection:"column",width:"13%",}}>
+      <Box sx={{ background: "#f5f2f2", py: 5,width:"100%",color:"#423c39"}}>
+          <Container maxWidth={false} disableGutters sx={{display:"flex",justifyContent:"flex-start",flexDirection:"row",gap:1}}>
+          <Box sx={{display:"flex",px:4,flexDirection:"column",width:"15%",}}>
               <Typography sx={{ fontSize: "17px", display: "flex", alignItems: "center" }}>Home <ArrowForwardIos sx={{ fontSize: "16px", mx: 0.5   }} />{selected}</Typography>
           <Typography sx={{fontSize:"18px",fontFamily:"serif",mt:8,mb:1}}>BROWSER BY</Typography>
           <Divider sx={{width:"100%"}}/>

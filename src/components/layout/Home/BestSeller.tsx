@@ -11,7 +11,7 @@ export default function BestSeller() {
 
         const bestSeller=AllProduct.filter((item)=>item.seller=="Best Seller")
   return (
-    <Box sx={{ background: "#fbf8f2", color: "white", py: 5 ,px:{lg:5, md:6, xs:3} ,minHeight:{lg:"100vh",xs:"240vh"},textAlign:"center"}}>
+    <Box sx={{ background: "#fbf8f2", color: "white", py: 5 ,px:{lg:5, md:6, xs:3} ,minHeight:{lg:"100vh",xs:"180vh"},textAlign:"center"}}>
         <Container maxWidth={false} disableGutters>
        <Typography sx={{textAlign:"center",color:"#423c39",fontSize:{md:"40px",xs:"25px"},fontFamily:"serif"}}>OUR BEST SELLERS</Typography>
        <Typography sx={{textAlign:"center",color:"#423c39",fontSize:"20px",fontFamily:"sans-serif"}}>Don't Miss Out</Typography>
@@ -30,6 +30,7 @@ export default function BestSeller() {
       alt="best seller"
       width={430}
       height={550}
+      
     />
 
     
