@@ -40,6 +40,7 @@ export default function CollectionBanner() {
             >
               Shop Now
             </Button>
+         
   </Box>
   
     </Box>

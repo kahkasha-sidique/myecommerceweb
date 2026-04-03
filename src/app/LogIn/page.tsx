@@ -1,4 +1,3 @@
-
 import Log from '@/pages/Log'
 import React from 'react'
 

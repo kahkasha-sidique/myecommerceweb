@@ -17,8 +17,15 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import React, { useState } from "react";
+import { AllProduct } from '@/data/product';
 
-export default function ProductPage() {
+
+type ProductType = (typeof AllProduct)[0];
+
+interface ProductPageProps {
+  product: ProductType;
+}
+export default function ProductPage({product}:ProductPageProps) {
   const [size, setSize] = useState("Large");
   const [quantity, setQuantity] = useState(1);
   const [expandedIndex, setExpandedIndex] = React.useState<number | null>(null);
@@ -38,7 +45,7 @@ export default function ProductPage() {
   
 
   return (
-    <Box sx={{ background: "#f5f2f2", py: 10,px: { lg: 30 }}}>
+    <Box sx={{ background: "#f5f2f2", py: 10,px: { lg: 30 },color:"#423c39"}}>
       <Container maxWidth="lg">
         <Box
           sx={{
@@ -50,7 +57,7 @@ export default function ProductPage() {
           {/* LEFT SIDE */}
           <Box sx={{ width: { xs: "100%", md: "48%" } }}>
             <Image
-              src="/images/best-seller (3).jpg"
+              src={`/images/product/${product.image}`}
               alt="product"
               width={530}
               height={600}
@@ -64,15 +71,15 @@ export default function ProductPage() {
 
           {/* RIGHT SIDE */}
           <Box sx={{ width: { xs: "100%", md: "40%" } }}>
-            <Typography variant="h6">I'm a Product</Typography>
-            <Typography>SKU: 0003</Typography>
+            <Typography variant="h6">{product.name}</Typography>
+            <Typography>SKU:{product.sku}</Typography>
 
             <Typography sx={{ mt: 2, fontWeight: "bold" }}>
-              $15.99
+              ${product.Price}
             </Typography>
 
             {/* COLOR */}
-            <Typography sx={{ mt: 2 }}>Color: Off White*</Typography>
+            <Typography sx={{ mt: 2 }}>Color:{product.color}*</Typography>
             <Box
               sx={{
                 mt: 1,
@@ -89,7 +96,7 @@ export default function ProductPage() {
                 sx={{
                   height: 20,
                   width: 20,
-                  background: "white",
+                  background: product.color,
                   borderRadius: "50%",
                   border: "1px solid #423c39",
                 }}
@@ -126,9 +133,9 @@ export default function ProductPage() {
                 
               }}
             >
-              <Typography >-</Typography>
-              <Typography>1</Typography>
-              <Typography>+</Typography>
+              <Typography onClick={()=>setQuantity(quantity-1)} >-</Typography>
+              <Typography>{quantity}</Typography>
+              <Typography onClick={()=>setQuantity(quantity+1)}>+</Typography>
             </Button>
 
             {/* BUTTONS */}
@@ -205,7 +212,7 @@ export default function ProductPage() {
             </Box>
 
             {/* SOCIAL */}
-            <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+            <Box sx={{ display: "flex", gap: 2, mt: 2 ,cursor:"pointer"}}>
               <FacebookOutlined sx={{fontSize:"21px"}}/>
               <Twitter sx={{fontSize:"21px"}}/>
               <Pinterest sx={{fontSize:"21px"}} />

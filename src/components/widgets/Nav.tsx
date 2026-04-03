@@ -32,7 +32,7 @@ const pages = [
 
 
 function Nav() {
-  const Navigate=useRouter()
+ 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const[open,setOpen]=React.useState<Boolean>(false)
@@ -68,9 +68,7 @@ else{
 }
 }
 
-const LogIn=()=>{
-  Navigate.push("/Log")
-}
+
   return (
       <Box  sx={{
       position: "fixed",
@@ -137,6 +135,7 @@ const LogIn=()=>{
         }}
       >
         {filterProduct.map((item, i) => (
+          
           <Box
             key={i}
             sx={{
@@ -201,7 +200,7 @@ const LogIn=()=>{
 
 
   <Box sx={{ display: "flex", alignItems: "center", gap: 1,cursor:"pointer" }} >
-   <AccountCircleOutlined sx={{fontSize:"30px"}} onClick={LogIn}/>
+   <Link href="/LogIn"><AccountCircleOutlined sx={{fontSize:"30px",color:"#423c39"}} /></Link>
   
   </Box>
 </Box>

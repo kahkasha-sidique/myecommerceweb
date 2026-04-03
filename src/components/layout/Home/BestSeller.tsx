@@ -5,6 +5,7 @@
 import { AllProduct } from '@/data/product'
 import { Box,  Button,  Container, Typography } from '@mui/material'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 export default function BestSeller() {
@@ -17,6 +18,7 @@ export default function BestSeller() {
        <Typography sx={{textAlign:"center",color:"#423c39",fontSize:"20px",fontFamily:"sans-serif"}}>Don't Miss Out</Typography>
       <Box sx={{py:5,display:"grid",gridTemplateColumns:{md:"1fr 1fr 1fr",xs:"1fr",sm:"1fr 1fr"},px:5}}>
         {bestSeller.map((item,i)=>(
+           <Link  key={item.id} href={`/product/${item.id}`}>
   <Box key={i} sx={{ position: "relative" ,overflow:"hidden",    "& img": {
       transition: "transform 0.4s ease"
     },
@@ -26,10 +28,10 @@ export default function BestSeller() {
     }}}>
 
     <Image
-      src={`/images/${item.image}`}
+      src={`/images/product/${item.image}`}
       alt="best seller"
-      width={430}
-      height={550}
+      width={400}
+      height={600}
       
     />
 
@@ -60,6 +62,7 @@ export default function BestSeller() {
     </Typography>
 
   </Box>
+  </Link>
 ))}
       </Box>
         <Button

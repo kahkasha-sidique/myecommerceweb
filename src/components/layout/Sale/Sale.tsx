@@ -5,6 +5,7 @@ import { AllProduct } from '@/data/product';
 import { ArrowForwardIos } from '@mui/icons-material';
 import { Box, Checkbox, Container, Divider, Slider, Typography } from '@mui/material';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react'
 
 export default function Sale() {
@@ -179,6 +180,8 @@ export default function Sale() {
               <Typography sx={{mb:2,fontSize:"15px",color:"grey"}}>{filterProduct.length} products</Typography>
             <Box sx={{display:"grid",gridTemplateColumns:{lg:"1fr 1fr 1fr 1fr",md:"1fr 1fr 1fr",sm:"1fr 1fr",xs:"1fr",gap:4}}}>
             {filterProduct.map((item,i)=>(
+               <Link
+                key={item.id} href={`/product/${item.id}`}>
               <Box key={i} sx={{ position: "relative" ,overflow:"hidden",    "& img": {
                     transition: "transform 0.4s ease"
                   },
@@ -221,6 +224,7 @@ export default function Sale() {
                   </Typography>
               
                 </Box>
+               </Link>
             ))}
             </Box>
           </Box>
