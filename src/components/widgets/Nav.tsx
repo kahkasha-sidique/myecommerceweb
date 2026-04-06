@@ -16,10 +16,12 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { AccountCircleOutlined, Favorite, SearchOutlined, ShoppingBagOutlined } from '@mui/icons-material';
 import Link from 'next/link';
-import { TextField } from '@mui/material';
+import { Badge, TextField } from '@mui/material';
 import { AllProduct } from '@/data/product';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+
+import { useCartStore } from '@/store/cartStore';
+
 
 
 const pages = [
@@ -34,10 +36,11 @@ const pages = [
 function Nav() {
  
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const[open,setOpen]=React.useState<Boolean>(false)
   const[value,setValue]=React.useState("")
   const[filterProduct,setFilterProduct]=React.useState(AllProduct.filter((item)=>item.seller==="Sale" || item.seller==="Best Seller"))
+  const cart=useCartStore((state)=>state.cart)
+ 
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -68,7 +71,7 @@ else{
 }
 }
 
-
+console.log(cart)
   return (
       <Box  sx={{
       position: "fixed",
@@ -198,7 +201,7 @@ else{
     FREE SHIPPING WORLDWIDE
   </Typography>
 
-
+ 
   <Box sx={{ display: "flex", alignItems: "center", gap: 1,cursor:"pointer" }} >
    <Link href="/LogIn"><AccountCircleOutlined sx={{fontSize:"30px",color:"#423c39"}} /></Link>
   
@@ -279,15 +282,31 @@ else{
   </Link>
  
 </Box>
-          <Box sx={{ flexGrow: 0}}>
-            <Tooltip title="Open settings">
-              <IconButton  sx={{ p: 0 }}>
-                <Favorite sx={{color:"white"}}/>
-                <ShoppingBagOutlined sx={{color:"white",fontSize:"33px",pl:{md:1,xs:0}}}/>
-              </IconButton>
-            </Tooltip>
-            
-          </Box>
+   <Box sx={{ flexGrow: 0 }}>
+  <Tooltip title="Open settings">
+    <IconButton sx={{ p: 0 }}>
+      <Favorite sx={{ color: "white" }} />
+
+      <Box sx={{ position: "relative", ml: { md: 1, xs: 0 } }}>
+        <ShoppingBagOutlined sx={{ color: "white", fontSize: "38px" }} />
+
+        <Box
+          sx={{
+            position: "absolute",
+            top: "60%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            color: "white",
+            fontSize: "14px",
+            fontWeight: "bold",
+          }}
+        >
+          {cart.length}
+        </Box>
+      </Box>
+    </IconButton>
+  </Tooltip>
+</Box>
         </Toolbar>
       </Container>
     </AppBar>

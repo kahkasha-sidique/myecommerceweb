@@ -18,6 +18,7 @@ import {
 import Image from "next/image";
 import React, { useState } from "react";
 import { AllProduct } from '@/data/product';
+import { useCartStore } from "@/store/cartStore";
 
 
 type ProductType = (typeof AllProduct)[0];
@@ -29,6 +30,8 @@ export default function ProductPage({product}:ProductPageProps) {
   const [size, setSize] = useState("Large");
   const [quantity, setQuantity] = useState(1);
   const [expandedIndex, setExpandedIndex] = React.useState<number | null>(null);
+  const addtoCart=useCartStore((state)=>state.addToCart)
+
 
 
   const setting = [
@@ -42,7 +45,7 @@ export default function ProductPage({product}:ProductPageProps) {
     },
   ];
 
-  
+ 
 
   return (
     <Box sx={{ background: "#f5f2f2", py: 10,px: { lg: 30 },color:"#423c39"}}>
@@ -63,7 +66,7 @@ export default function ProductPage({product}:ProductPageProps) {
               height={600}
               style={{ width: "100%", height: "auto" }}
             />
-
+           
             <Typography sx={{ mt: 3 }}>
              I'm a product description. I’m a great place to include more information about your product. Buyers like to know what they’re getting before they purchase.
             </Typography>
@@ -72,12 +75,13 @@ export default function ProductPage({product}:ProductPageProps) {
           {/* RIGHT SIDE */}
           <Box sx={{ width: { xs: "100%", md: "40%" } }}>
             <Typography variant="h6">{product.name}</Typography>
+           
             <Typography>SKU:{product.sku}</Typography>
 
             <Typography sx={{ mt: 2, fontWeight: "bold" }}>
               ${product.Price}
             </Typography>
-
+          
             {/* COLOR */}
             <Typography sx={{ mt: 2 }}>Color:{product.color}*</Typography>
             <Box
@@ -151,6 +155,7 @@ export default function ProductPage({product}:ProductPageProps) {
                  borderRadius:"0px",
                 border:"1px solid #423c39"
               }}
+              onClick={()=>addtoCart(product)}
             >
               Add to Cart
             </Button>
@@ -210,7 +215,7 @@ export default function ProductPage({product}:ProductPageProps) {
                 </Box>
               ))}
             </Box>
-
+          
             {/* SOCIAL */}
             <Box sx={{ display: "flex", gap: 2, mt: 2 ,cursor:"pointer"}}>
               <FacebookOutlined sx={{fontSize:"21px"}}/>
