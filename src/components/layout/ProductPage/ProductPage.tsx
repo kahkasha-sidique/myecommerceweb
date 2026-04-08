@@ -28,7 +28,7 @@ interface ProductPageProps {
 }
 export default function ProductPage({product}:ProductPageProps) {
   const [size, setSize] = useState("Large");
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
   const [expandedIndex, setExpandedIndex] = React.useState<number | null>(null);
   const addtoCart=useCartStore((state)=>state.addToCart)
 
@@ -155,7 +155,7 @@ export default function ProductPage({product}:ProductPageProps) {
                  borderRadius:"0px",
                 border:"1px solid #423c39"
               }}
-              onClick={()=>addtoCart(product)}
+              onClick={()=>addtoCart({...product,size:size,quantity:quantity})}
             >
               Add to Cart
             </Button>
