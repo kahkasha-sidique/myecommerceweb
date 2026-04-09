@@ -40,10 +40,11 @@ function Nav() {
   const[cartOpen,setCartOpen]=React.useState<Boolean>(false)
   const[value,setValue]=React.useState("")
   const[codeOpen,setCodeOpen]=React.useState(false)
- 
   const[filterProduct,setFilterProduct]=React.useState(AllProduct.filter((item)=>item.seller==="Sale" || item.seller==="Best Seller"))
   const cart=useCartStore((state)=>state.cart)
   const handleDelete=useCartStore((state)=>state.handleDelete)
+  const incrementAdd=useCartStore((state)=>state.incrementAdd)
+  const decrementSub=useCartStore((state)=>state.decrementSub)
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -352,9 +353,9 @@ const total=cart.reduce((acc,item)=>acc+item.Price*item.quantity,0)
                 
               }}
             >
-              <Typography   >-</Typography>
+              <Typography  onClick={()=>decrementSub(item.quantity,item.id,item.size)}  >-</Typography>
               <Typography>{item.quantity}</Typography>
-              <Typography>+</Typography>
+              <Typography onClick={()=>incrementAdd(item.quantity,item.id,item.size)}>+</Typography>
             </Button>
          <p className='text-sm mt-4'>
   ${Number(item.Price) * Number(item.quantity)}

@@ -17,6 +17,8 @@ interface createUser{
     cart:productType[];
     addToCart:(product:productType)=>void;
     handleDelete:(id:number,size:string)=>void
+    incrementAdd:(quantity:number,id:number,size:string)=>void
+    decrementSub:(quantity:number,id:number,size:string)=>void
 }                                                                                                                                                                                                                                                                                                                                         
 export const useCartStore=create<createUser>((set)=>({
  cart:[],
@@ -36,5 +38,37 @@ else{
  }),
  handleDelete:(id:number,size:string)=>set((state)=>({
  cart:state.cart.filter((p)=>!(p.id === id && p.size === size))
- }))
+ })),
+
+ incrementAdd:(quantity:number,id:number,size:string)=>set((state)=>{
+    
+    const quantitydata=state.cart.find((p)=>p.id===id&&p.size===size)
+if(quantitydata)
+    return{
+cart:state.cart.map((p)=>p.id===id&&p.size===size?
+{...p,quantity:quantity+1}:p)
+}
+else{
+    return{
+        cart:[...state.cart]
+    }
+}
+ })
+ ,
+decrementSub:(quantity:number,id:number,size:string)=>set((state)=>{
+
+    const quantitySub=state.cart.find((p)=>p.id===id&&p.size===size)
+    if(quantitySub)
+        return{
+    cart:state.cart.map((p)=>p.id===id&&p.size===size?
+    {...p,quantity:quantity-1}:p
+        )
+    }
+    else{
+        return{
+            cart:[...state.cart]
+        }
+    }
+}) 
+
 }))
