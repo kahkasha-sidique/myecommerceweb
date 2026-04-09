@@ -307,107 +307,161 @@ const total=cart.reduce((acc,item)=>acc+item.Price*item.quantity,0)
         
         
 {cartOpen && (
-  <Box className="fixed bg-white top-0 right-0 min-w-[30vw] z-50 px-10 py-6 h-full overflow-y-auto flex flex-col gap-6">
-    
-   
-    <Box className="flex flex-row items-center gap-52 ">
-     <p className='text-lg '><span className='text-2xl'>Cart</span> ({cart.length} items)</p>
-      <Button
-        sx={{ color: "black", borderRadius: 0 }}
-        onClick={closeCartPage}
-      >
-        <Close/>
-      </Button>
-    </Box>
-<Divider/>
-    
-    {cart.length==0 ?
-    <p className='text-lg py-40'>Your cart is empty</p>
-    :
-  
-   <div className='flex justify-start items-start flex-col'>
-    <div className='flex justify-start items-start  flex-col gap-3'>
-      <div className='flex justify-start items-start flex-col max-h-[50vh] overflow-y-auto'>
-      {cart.map((item,i)=>(
-        <div key={i} className='flex justify-start items-start flex-row gap-3 border-b border-gray-300 py-4'>
-         <div className='flex justify-start items-start'>
-          <img src={`/images/product/${item.image}`} className='h-20 w-20'/>
-          </div>
-          <div className='flex justify-start items-start flex-col '>
-            <p className='text-sm'>{item.name}</p>
-            <p className='text-sm pt-3'>${item.Price}</p>
-            <p className='text-sm pt-2'>Color:{item.color}</p>
-            <p className='text-sm pt-2'>Size:{item.size}</p>
-            <div className='flex justify-start items-start gap-32'>
-                 <Button
-              
-              sx={{
-                mt: 1,
-                background: "#f5f2f2",
-                color: "#423c39",
-                py:0.5,
-                width:"30%",
-                 borderRadius:"0px",
-                border:"1px solid #423c39",
-                gap:2,
-                
-              }}
-            >
-              <Typography  onClick={()=>decrementSub(item.quantity,item.id,item.size)}  >-</Typography>
-              <Typography>{item.quantity}</Typography>
-              <Typography onClick={()=>incrementAdd(item.quantity,item.id,item.size)}>+</Typography>
-            </Button>
-         <p className='text-sm mt-4'>
-  ${Number(item.Price) * Number(item.quantity)}
-</p>
+ <Box className="fixed bg-white top-0 right-0 w-full sm:w-[80vw] md:w-[40vw] lg:w-[30vw] z-50 px-4 sm:px-6 md:px-10 py-5 h-full overflow-y-auto flex flex-col gap-6">
+
+
+  <Box className="flex justify-between items-center">
+    <p className="text-sm sm:text-base md:text-lg">
+      <span className="text-lg sm:text-xl md:text-2xl font-medium">Cart</span> ({cart.length} items)
+    </p>
+    <Button sx={{ color: "black", borderRadius: 0 }} onClick={closeCartPage}>
+      <Close />
+    </Button>
+  </Box>
+
+  <Divider />
+
+
+  {cart.length === 0 ? (
+    <p className="text-center text-base sm:text-lg py-20">Your cart is empty</p>
+  ) : (
+    <div className="flex flex-col gap-4">
+
+     
+      <div className="flex flex-col gap-4 max-h-[45vh] overflow-y-auto">
+        {cart.map((item, i) => (
+          <div
+            key={i}
+            className="flex gap-3 border-b border-gray-300 pb-4 flex-row"
+          >
+          
+            <img
+              src={`/images/product/${item.image}`}
+              className="h-16 w-16 sm:h-20 sm:w-20 object-cover"
+            />
+
+       
+            <div className="flex flex-col flex-1">
+              <p className="text-sm">{item.name}</p>
+              <p className="text-sm mt-1">${item.Price}</p>
+              <p className="text-xs mt-1">Color: {item.color}</p>
+              <p className="text-xs">Size: {item.size}</p>
+
+
+              <div className="flex justify-between items-center mt-2">
+                <Button
+                  sx={{
+                    background: "#f5f2f2",
+                    color: "#423c39",
+                    minWidth: "90px",
+                    borderRadius: "0px",
+                    border: "1px solid #423c39",
+                    display: "flex",
+                    gap: 1,
+                  }}
+                >
+                  <Typography onClick={() => decrementSub(item.quantity, item.id, item.size)}>-</Typography>
+                  <Typography>{item.quantity}</Typography>
+                  <Typography onClick={() => incrementAdd(item.quantity, item.id, item.size)}>+</Typography>
+                </Button>
+
+                <p className="text-sm font-medium">
+                  ${Number(item.Price) * Number(item.quantity)}
+                </p>
               </div>
             </div>
-            <div className='flex justify-end items-end'>
-              <Delete onClick={()=>handleDelete(item.id,item.size)} />
-              </div>
-          </div>
-      ))}
-      </div>
-    <div 
-  className='flex flex-col cursor-pointer ' 
-  onClick={() => setCodeOpen(prev => !prev)}
->
-  <p className='text-lg flex items-center gap-2 '>
-    <Sell sx={{ fontSize: "18px" }} />
-    Enter a promo code
-  </p>
 
-  {codeOpen && (
-    <div className='flex items-center gap-4 mt-2 w-full'>
-      <TextField 
-        placeholder="e.g., SAVE50" 
-        size="small"
-        fullWidth
-      />
-      <Button 
-        variant='contained' 
-        sx={{ background: "#423c39", height: "40px",px:6 }}
+           
+            <Delete
+              className="cursor-pointer"
+              onClick={() => handleDelete(item.id, item.size)}
+            />
+          </div>
+        ))}
+      </div>
+
+  
+      <div
+        className="flex flex-col cursor-pointer"
+        onClick={() => setCodeOpen((prev) => !prev)}
       >
-        Apply
-      </Button>
+        <p className="text-base flex items-center gap-2">
+          <Sell sx={{ fontSize: "18px" }} />
+          Enter a promo code
+        </p>
+
+        {codeOpen && (
+          <div className="flex flex-col sm:flex-row gap-3 mt-2 w-full">
+            <TextField
+              placeholder="e.g., SAVE50"
+              size="small"
+              fullWidth
+            />
+            <Button
+              variant="contained"
+              sx={{
+                background: "#423c39",
+                height: "40px",
+                px: 4,
+              }}
+            >
+              Apply
+            </Button>
+          </div>
+        )}
+      </div>
+
+
+      <div className="flex flex-col gap-3 pt-4">
+        <Divider />
+
+        <div className="flex justify-between">
+          <p className="text-base sm:text-lg">Estimated total</p>
+          <p className="text-base sm:text-lg font-medium">
+            ${total.toFixed(2)}
+          </p>
+        </div>
+
+        <p className="text-xs sm:text-sm">
+          Taxes and shipping are calculated at checkout.
+        </p>
+
+
+        <Button
+          variant="contained"
+          sx={{
+            borderRadius: 0,
+            background: "#423c39",
+            boxShadow: "none",
+            py: 1,
+            textTransform: "capitalize",
+            width: "100%",
+          }}
+        >
+          Checkout
+        </Button>
+
+        <Button
+          variant="contained"
+          sx={{
+            borderRadius: 0,
+            background: "#423c39",
+            boxShadow: "none",
+            py: 1,
+            textTransform: "capitalize",
+            width: "100%",
+          }}
+        >
+          View Cart
+        </Button>
+
+        <p className="text-xs sm:text-sm text-center">
+          <Lock sx={{ fontSize: "16px" }} /> Secure Checkout
+        </p>
+      </div>
     </div>
   )}
-</div>
-    </div>
-    <div className='flex justify-start items-start flex-col pt-4 gap-2'>
-   <Divider className="w-full " />
-    <div className='flex justify-start items-start gap-45 '>
-    <p className='text-lg '>Estimated total</p>
-    <p className='text-lg'>${total.toFixed(2)}</p>
-    </div>
-    <p className='text-sm '>Taxes and shipping are calculated at checkout.</p>
-    <Button variant="contained" sx={{borderRadius:0,background:"#423c39",boxShadow:"none",px:20,py:1,textTransform:"capitalize"}}>Checkout</Button>
-    <Button variant="contained" sx={{borderRadius:0,background:"#423c39",boxShadow:"none",px:20,py:1,textTransform:"capitalize"}}>View Cart</Button>
-    <p className='text-sm px-35'><Lock sx={{fontSize:"18px"}}/>Secure Checkout</p>
-    </div>
-   </div>
-}
-  </Box>
+</Box>
 )}
         <Box
           sx={{
