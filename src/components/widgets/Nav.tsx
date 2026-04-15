@@ -19,9 +19,11 @@ import Link from 'next/link';
 import { Divider, TextField } from '@mui/material';
 import { AllProduct } from '@/data/product';
 import Image from 'next/image';
-
-import { useCartStore } from '@/store/cartStore';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { handleDelete } from '@/features/cart/cartSlice';
+import type { RootState } from '@/store/cartStore';
+import { incrementAdd } from '@/features/cart/cartSlice';
+import { decrementSub } from '@/features/cart/cartSlice';
 
 
 const pages = [
@@ -41,10 +43,12 @@ function Nav() {
   const[value,setValue]=React.useState("")
   const[codeOpen,setCodeOpen]=React.useState(false)
   const[filterProduct,setFilterProduct]=React.useState(AllProduct.filter((item)=>item.seller==="Sale" || item.seller==="Best Seller"))
-  const cart=useCartStore((state)=>state.cart)
-  const handleDelete=useCartStore((state)=>state.handleDelete)
-  const incrementAdd=useCartStore((state)=>state.incrementAdd)
-  const decrementSub=useCartStore((state)=>state.decrementSub)
+  // const cart=useCartStore((state)=>state.cart)
+  // const handleDelete=useCartStore((state)=>state.handleDelete)
+  // const incrementAdd=useCartStore((state)=>state.incrementAdd)
+  // const decrementSub=useCartStore((state)=>state.decrementSub)
+ const cart = useSelector((state: RootState) => state.cart.cart);
+  const dispatch=useDispatch()
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -353,6 +357,7 @@ const total=cart.reduce((acc,item)=>acc+item.Price*item.quantity,0)
                   sx={{
                     background: "#f5f2f2",
                     color: "#423c39",
+
                     minWidth: "90px",
                     borderRadius: "0px",
                     border: "1px solid #423c39",
@@ -360,9 +365,9 @@ const total=cart.reduce((acc,item)=>acc+item.Price*item.quantity,0)
                     gap: 1,
                   }}
                 >
-                  <Typography onClick={() => decrementSub(item.quantity, item.id, item.size)}>-</Typography>
+                  <Typography onClick={() => dispatch(decrementSub({quantity:item.quantity, id:item.id, size:item.size}))}>-</Typography>
                   <Typography>{item.quantity}</Typography>
-                  <Typography onClick={() => incrementAdd(item.quantity, item.id, item.size)}>+</Typography>
+                  <Typography onClick={() => dispatch(incrementAdd({quantity:item.quantity, id:item.id, size:item.size}))}>+</Typography>
                 </Button>
 
                 <p className="text-sm font-medium">
@@ -374,7 +379,7 @@ const total=cart.reduce((acc,item)=>acc+item.Price*item.quantity,0)
            
             <Delete
               className="cursor-pointer"
-              onClick={() => handleDelete(item.id, item.size)}
+              onClick={() => dispatch(handleDelete( {id:item.id, size:item.size}))}
             />
           </div>
         ))}

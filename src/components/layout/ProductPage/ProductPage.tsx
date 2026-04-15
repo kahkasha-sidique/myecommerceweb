@@ -18,7 +18,9 @@ import {
 import Image from "next/image";
 import React, { useState } from "react";
 import { AllProduct } from '@/data/product';
-import { useCartStore } from "@/store/cartStore";
+import { useDispatch } from "react-redux";
+import { addtoCart } from "@/features/cart/cartSlice";
+
 
 
 type ProductType = (typeof AllProduct)[0];
@@ -30,8 +32,8 @@ export default function ProductPage({product}:ProductPageProps) {
   const [size, setSize] = useState("Large");
   const [quantity, setQuantity] = useState(0);
   const [expandedIndex, setExpandedIndex] = React.useState<number | null>(null);
-  const addtoCart=useCartStore((state)=>state.addToCart)
-
+  // const addtoCart=useCartStore((state)=>state.addToCart)
+const dispatch=useDispatch()
 
 
   const setting = [
@@ -155,7 +157,7 @@ export default function ProductPage({product}:ProductPageProps) {
                  borderRadius:"0px",
                 border:"1px solid #423c39"
               }}
-              onClick={()=>addtoCart({...product,size:size,quantity:quantity})}
+              onClick={()=>dispatch(addtoCart({product,size,quantity}))}
             >
               Add to Cart
             </Button>
